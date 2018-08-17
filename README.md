@@ -1,0 +1,2 @@
+# automatic-faker
+Faker example
