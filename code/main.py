@@ -1,7 +1,7 @@
 import logging
 from time import time
-from faker import Faker
 
+from faker import Faker
 
 if __name__ == '__main__':
     start_time = time()
@@ -20,6 +20,16 @@ if __name__ == '__main__':
     factory.random.seed(random_seed)
     for _ in range(10):
         logger.info(factory.name())
+
+    for random_seed in range(1, 100):
+        found = set()
+        done = False
+        name = None
+        while not done:
+            name = factory.name()
+            done = name in found
+            found.add(name)
+        logger.info('seed %d found %s after %d trials' % (random_seed, name, len(found)))
 
     logger.info('done')
     finish_time = time()
