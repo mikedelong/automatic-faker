@@ -3,6 +3,8 @@ from time import time
 
 from faker import Faker
 
+import matplotlib.pyplot as plt
+
 if __name__ == '__main__':
     start_time = time()
 
@@ -21,7 +23,9 @@ if __name__ == '__main__':
     for _ in range(10):
         logger.info(factory.name())
 
-    for random_seed in range(1, 100):
+    seeds = range(1, 100)
+    counts = list()
+    for random_seed in seeds:
         found = set()
         done = False
         name = None
@@ -29,7 +33,11 @@ if __name__ == '__main__':
             name = factory.name()
             done = name in found
             found.add(name)
-        logger.info('seed %d found %s after %d trials' % (random_seed, name, len(found)))
+        count = len(found)
+        counts.append(count)
+        logger.info('seed %d found %s after %d trials' % (random_seed, name, count))
+    plt.scatter(seeds, counts)
+    plt.show()
 
     logger.info('done')
     finish_time = time()
