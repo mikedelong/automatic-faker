@@ -2,8 +2,8 @@ import logging
 from time import time
 
 import matplotlib.pyplot as plt
-from faker import Faker
 import numpy as np
+from faker import Faker
 
 if __name__ == '__main__':
     start_time = time()
