@@ -40,7 +40,9 @@ if __name__ == '__main__':
     fitline = np.polyfit(seeds, counts, 1)
     p = np.poly1d(fitline)
     plt.plot(seeds, p(seeds), 'r--')
-    plt.show()
+    output_folder = '../output/'
+    output_file = output_folder + 'first_collision_scatter.png'
+    plt.savefig(output_file)
 
     logger.info('done')
     finish_time = time()
