@@ -25,14 +25,19 @@ if __name__ == '__main__':
 
     seeds = range(1, 100)
     counts = list()
+    collision_limit = 1
     for random_seed in seeds:
         found = set()
         done = False
         name = None
+        collision_count = 0
         while not done:
             name = factory.name()
-            done = name in found
-            found.add(name)
+            done = collision_count == collision_limit
+            if name in found:
+                collision_count += 1
+            else:
+                found.add(name)
         count = len(found)
         counts.append(count)
         logger.info('seed %d found %s after %d trials' % (random_seed, name, count))
