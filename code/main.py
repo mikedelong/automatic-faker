@@ -1,9 +1,9 @@
 import logging
 from time import time
 
-from faker import Faker
-
 import matplotlib.pyplot as plt
+from faker import Faker
+import numpy as np
 
 if __name__ == '__main__':
     start_time = time()
@@ -37,6 +37,9 @@ if __name__ == '__main__':
         counts.append(count)
         logger.info('seed %d found %s after %d trials' % (random_seed, name, count))
     plt.scatter(seeds, counts)
+    fitline = np.polyfit(seeds, counts, 1)
+    p = np.poly1d(fitline)
+    plt.plot(seeds, p(seeds), 'r--')
     plt.show()
 
     logger.info('done')
