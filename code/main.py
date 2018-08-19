@@ -23,30 +23,30 @@ if __name__ == '__main__':
     for _ in range(10):
         logger.info(factory.name())
 
-    seeds = range(1, 100)
+    seeds = range(1, 200)
     counts = list()
-    collision_limit = 1
+    collision_limit = 10
     for random_seed in seeds:
         found = set()
         done = False
         name = None
-        collision_count = 0
+        collisions = list()
         while not done:
             name = factory.name()
-            done = collision_count == collision_limit
+            done = len(collisions) == collision_limit
             if name in found:
-                collision_count += 1
+                collisions.append(name)
             else:
                 found.add(name)
         count = len(found)
         counts.append(count)
-        logger.info('seed %d found %s after %d trials' % (random_seed, name, count))
+        logger.info('seed %d found repeats  %s after %d trials' % (random_seed, collisions, count))
     plt.scatter(seeds, counts)
     fitline = np.polyfit(seeds, counts, 1)
     p = np.poly1d(fitline)
     plt.plot(seeds, p(seeds), 'r--')
     output_folder = '../output/'
-    output_file = output_folder + 'first_collision_scatter.png'
+    output_file = output_folder + 'collision_scatter.png'
     plt.savefig(output_file)
 
     logger.info('done')
