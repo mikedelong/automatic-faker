@@ -18,33 +18,29 @@ if __name__ == '__main__':
     logger.info('started')
 
     factory = Faker()
-    random_seed = 1
-    factory.random.seed(random_seed)
-    for _ in range(10):
-        logger.info(factory.name())
-
-    seeds = range(1, 200)
-    counts = list()
-    collision_limit = 10
-    for random_seed in seeds:
-        found = set()
-        done = False
-        name = None
-        collisions = list()
-        while not done:
-            name = factory.name()
-            done = len(collisions) == collision_limit
-            if name in found:
-                collisions.append(name)
-            else:
-                found.add(name)
-        count = len(found)
-        counts.append(count)
-        logger.info('seed %d found repeats  %s after %d trials' % (random_seed, collisions, count))
-    plt.scatter(seeds, counts)
-    fitline = np.polyfit(seeds, counts, 1)
-    p = np.poly1d(fitline)
-    plt.plot(seeds, p(seeds), 'r--')
+    seeds = range(20)
+    collision_limits = range(5)
+    counts = [[0 for x in seeds] for y in collision_limits]
+    for collision_limit in collision_limits:
+        for random_seed in seeds:
+            found = set()
+            done = False
+            name = None
+            collisions = list()
+            while not done:
+                name = factory.name()
+                done = len(collisions) == collision_limit
+                if name in found:
+                    collisions.append(name)
+                else:
+                    found.add(name)
+            count = len(found)
+            counts[collision_limit][random_seed] = count
+            logger.info('seed %d found repeats  %s after %d trials' % (random_seed, collisions, count))
+        plt.scatter(seeds, counts[collision_limit])
+        fitline = np.polyfit(seeds, counts[collision_limit], 1)
+        p = np.poly1d(fitline)
+        plt.plot(seeds, p(seeds), 'r--')
     output_folder = '../output/'
     output_file = output_folder + 'collision_scatter.png'
     plt.savefig(output_file)
