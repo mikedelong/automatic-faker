@@ -18,8 +18,8 @@ if __name__ == '__main__':
     logger.info('started')
 
     factory = Faker()
-    seeds = range(20)
-    collision_limits = range(5)
+    seeds = range(200)
+    collision_limits = range(100)
     counts = [[0 for x in seeds] for y in collision_limits]
     for collision_limit in collision_limits:
         for random_seed in seeds:
@@ -37,10 +37,10 @@ if __name__ == '__main__':
             count = len(found)
             counts[collision_limit][random_seed] = count
             logger.info('seed %d found repeats  %s after %d trials' % (random_seed, collisions, count))
-        plt.scatter(seeds, counts[collision_limit])
+        plt.scatter(seeds, counts[collision_limit], s=1)
         fitline = np.polyfit(seeds, counts[collision_limit], 1)
         p = np.poly1d(fitline)
-        plt.plot(seeds, p(seeds), 'r--')
+        plt.plot(seeds, p(seeds), '--')
     output_folder = '../output/'
     output_file = output_folder + 'collision_scatter.png'
     plt.savefig(output_file)
