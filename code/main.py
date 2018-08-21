@@ -18,8 +18,8 @@ if __name__ == '__main__':
     logger.info('started')
 
     settings = {
-        'seeds' : 200,
-        'collision_limit' : 100
+        'seeds': 200,
+        'collision_limit': 100
     }
     factory = Faker()
     seeds = range(settings['seeds'])
