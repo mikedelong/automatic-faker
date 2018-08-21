@@ -17,9 +17,13 @@ if __name__ == '__main__':
     console_handler.setLevel(logging.INFO)
     logger.info('started')
 
+    settings = {
+        'seeds' : 200,
+        'collision_limit' : 100
+    }
     factory = Faker()
-    seeds = range(200)
-    collision_limits = range(100)
+    seeds = range(settings['seeds'])
+    collision_limits = range(settings['collision_limit'])
     counts = [[0 for x in seeds] for y in collision_limits]
     for collision_limit in collision_limits:
         for random_seed in seeds:
