@@ -1,7 +1,6 @@
 import logging
 from time import time
 
-import matplotlib.pyplot as plt
 from faker import Faker
 
 if __name__ == '__main__':
@@ -35,9 +34,6 @@ if __name__ == '__main__':
                                             float(len(collisions)) / float(len(found) + len(collisions))))
             else:
                 found.add(name)
-    output_folder = '../output/'
-    output_file = output_folder + 'collision_scatter.png'
-    plt.savefig(output_file)
 
     logger.info('done')
     finish_time = time()
