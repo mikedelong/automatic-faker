@@ -17,9 +17,11 @@ if __name__ == '__main__':
     logger.info('started')
 
     settings = {
-        'collision_limit': 1000
+        'collision_limit': 1000,
+        'test_count': 8,
     }
-    for random_state in range(0, 3):
+
+    for random_state in range(0, settings['test_count']):
         factory = Faker()
         factory.seed(random_state)
         found = set()
@@ -42,7 +44,7 @@ if __name__ == '__main__':
                 found.add(name)
 
         plt.plot(xs, ys)
-    plt.show()
+    plt.savefig('../output/hit_rates.png')
     logger.info('done')
     finish_time = time()
     elapsed_hours, elapsed_remainder = divmod(finish_time - start_time, 3600)
