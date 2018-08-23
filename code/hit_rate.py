@@ -16,24 +16,23 @@ if __name__ == '__main__':
     logger.info('started')
 
     settings = {
-        'collision_limit': 100
+        'collision_limit': 1000
     }
     factory = Faker()
-    collision_limits = range(settings['collision_limit'])
     found = set()
-    for collision_limit in collision_limits:
-        done = False
-        name = None
-        collisions = list()
-        while not done:
-            name = factory.name()
-            done = len(collisions) == collision_limit
-            if name in found:
-                collisions.append(name)
-                logger.info('%d %d %.4f' % (len(found) + len(collisions), len(collisions),
-                                            float(len(collisions)) / float(len(found) + len(collisions))))
-            else:
-                found.add(name)
+    done = False
+    name = None
+    collisions = list()
+    collision_limit = settings['collision_limit']
+    while not done:
+        name = factory.name()
+        done = len(collisions) == collision_limit
+        if name in found:
+            collisions.append(name)
+            logger.info('%d %d %.4f' % (len(found) + len(collisions), len(collisions),
+                                        float(len(collisions)) / float(len(found) + len(collisions))))
+        else:
+            found.add(name)
 
     logger.info('done')
     finish_time = time()
