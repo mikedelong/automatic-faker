@@ -17,7 +17,7 @@ if __name__ == '__main__':
     logger.info('started')
 
     settings = {
-        'collision_limit': 1000,
+        'collision_limit': 0.6,
         'test_count': 8,
     }
 
@@ -31,15 +31,19 @@ if __name__ == '__main__':
         collision_limit = settings['collision_limit']
         xs = list()
         ys = list()
+        collision_rate = -1
         while not done:
             name = factory.name()
-            done = len(collisions) == collision_limit
+            done = collision_rate > collision_limit
             if name in found:
                 collisions.append(name)
-                xs.append(len(found) + len(collisions))
-                ys.append(float(len(collisions)) / float(len(found) + len(collisions)))
-                logger.info('%d %d %.4f' % (len(found) + len(collisions), len(collisions),
-                                            float(len(collisions)) / float(len(found) + len(collisions))))
+                collision_count = len(collisions)
+                found_count = len(found)
+                total_samples = found_count + collision_count
+                collision_rate = float(collision_count) / float(total_samples)
+                xs.append(total_samples)
+                ys.append(collision_rate)
+                logger.info('%d %d %.4f' % (total_samples, collision_count, collision_rate))
             else:
                 found.add(name)
 
