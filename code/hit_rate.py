@@ -3,6 +3,7 @@ from time import time
 
 import matplotlib.pyplot as plt
 from faker import Faker
+from json import load
 
 if __name__ == '__main__':
     start_time = time()
@@ -16,10 +17,9 @@ if __name__ == '__main__':
     console_handler.setLevel(logging.INFO)
     logger.info('started')
 
-    settings = {
-        'collision_limit': 0.6,
-        'test_count': 8,
-    }
+    with open('hit-rate-settings.json') as settings_fp:
+        settings = load(settings_fp)
+
 
     for random_state in range(0, settings['test_count']):
         factory = Faker()
