@@ -1,13 +1,10 @@
 import logging
+from json import load
+from os.path import isdir
 from time import time
 
 import matplotlib.pyplot as plt
 from faker import Faker
-from json import load
-
-from os.path import isdir
-
-# todo add an existence check for the output folder
 
 if __name__ == '__main__':
     start_time = time()
