@@ -5,6 +5,10 @@ import matplotlib.pyplot as plt
 from faker import Faker
 from json import load
 
+from os.path import isdir
+
+# todo add an existence check for the output folder
+
 if __name__ == '__main__':
     start_time = time()
 
@@ -17,9 +21,13 @@ if __name__ == '__main__':
     console_handler.setLevel(logging.INFO)
     logger.info('started')
 
+    output_folder = '../output/'
+    if not isdir(output_folder):
+        logger.warning('folder %s does not exist; quitting.' % output_folder)
+        quit()
+
     with open('hit-rate-settings.json') as settings_fp:
         settings = load(settings_fp)
-
 
     for random_state in range(0, settings['test_count']):
         factory = Faker()
