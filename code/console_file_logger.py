@@ -1,4 +1,5 @@
 import logging
+from os import remove
 from time import time
 
 if __name__ == '__main__':
@@ -6,7 +7,7 @@ if __name__ == '__main__':
 
     console_formatter = logging.Formatter('%(asctime)s : %(name)s :: %(levelname)s : %(message)s')
     file_formatter = logging.Formatter('%(asctime)s : %(message)s')
-    logger = logging.getLogger('main')
+    logger = logging.getLogger(__name__)
     logger.setLevel(logging.DEBUG)
 
     console_handler = logging.StreamHandler()
@@ -14,7 +15,13 @@ if __name__ == '__main__':
     console_handler.setLevel(logging.INFO)
     logger.addHandler(console_handler)
 
-    file_handler = logging.FileHandler('../output/automatic-faker.log', mode='a', encoding='utf-8', delay=False)
+    output_folder = '../output/'
+    faker_log = output_folder + 'automatic-faker.log'
+    try:
+        remove(faker_log)
+    except OSError:
+        pass
+    file_handler = logging.FileHandler(faker_log, mode='a', encoding='utf-8', delay=False)
     file_handler.setFormatter(file_formatter)
     file_handler.setLevel(logging.INFO)
     logger.addHandler(file_handler)
